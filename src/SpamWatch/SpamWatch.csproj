@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>SpamWatch</Title>
+        <Authors>Marcel Alexandru Nitan</Authors>
+        <Description>SpamWatch C# Library</Description>
+        <LangVersion>default</LangVersion>
+        <Nullable>disable</Nullable>
+        <TargetFrameworks>net452;netstandard2.0;netcoreapp3.1</TargetFrameworks>
+        <SignAssembly>true</SignAssembly>
+        <PackageProjectUrl>https://github.com/SpamWatch/spamwatch-csharp</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/SpamWatch/spamwatch-csharp/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/SpamWatch/spamwatch-csharp</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+      <PackageReference Include="RestSharp" Version="106.11.5-alpha.0.18" />
+    </ItemGroup>
+
+</Project>

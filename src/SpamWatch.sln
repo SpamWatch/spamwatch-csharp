@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpamWatch", "SpamWatch\SpamWatch.csproj", "{1BB011FF-ABBB-4226-A84E-34F27F4B4AEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpamWatchExample", "SpamWatchExample\SpamWatchExample.csproj", "{B8813384-6AD2-4634-A4BD-35F5A27AE7AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BB011FF-ABBB-4226-A84E-34F27F4B4AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB011FF-ABBB-4226-A84E-34F27F4B4AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB011FF-ABBB-4226-A84E-34F27F4B4AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB011FF-ABBB-4226-A84E-34F27F4B4AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8813384-6AD2-4634-A4BD-35F5A27AE7AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8813384-6AD2-4634-A4BD-35F5A27AE7AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8813384-6AD2-4634-A4BD-35F5A27AE7AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8813384-6AD2-4634-A4BD-35F5A27AE7AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
