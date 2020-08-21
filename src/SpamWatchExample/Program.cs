@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 using SpamWatch;
 
@@ -8,7 +9,7 @@ namespace SpamWatchExample
     {
         private const string _token = "Your token here";
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var client = new Client(_token);
 
@@ -20,6 +21,14 @@ namespace SpamWatchExample
             // Get user ban
 
             var ban = client.GetBan(638997860);
+            Console.WriteLine(ban.Id);
+            Console.WriteLine(ban.Reason);
+            Console.WriteLine(ban.Date);
+            Console.WriteLine(ban.Admin);
+            
+            // You can also use async methods
+
+            var asyncBan = await client.GetBanAsync(638997860);
             Console.WriteLine(ban.Id);
             Console.WriteLine(ban.Reason);
             Console.WriteLine(ban.Date);

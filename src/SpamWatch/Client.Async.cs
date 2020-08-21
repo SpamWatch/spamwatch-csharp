@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,24 +14,13 @@ namespace SpamWatch
 {
     public partial class Client
     {
-        private readonly RestClient _client;
-        public readonly SpamWatchToken Token;
-
-
-        public Client(string token, string baseUrl = "https://api.spamwat.ch")
-        {
-            _client = new RestClient(baseUrl);
-            _client.AddDefaultHeader("Authorization", $"Bearer {token}");
-            Token = GetSelf();
-        }
-
         /// <summary>
         /// Get the API version
         /// </summary>
         /// <returns>SpamWatchVersion</returns>
-        public SpamWatchVersion GetVersion()
+        public async Task<SpamWatchVersion> GetVersionAsync()
         {
-            var response = MakeRequest("version", Method.GET);
+            var response = await MakeRequestAsync("version", Method.GET);
             return JsonConvert.DeserializeObject<SpamWatchVersion>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
@@ -40,9 +30,9 @@ namespace SpamWatch
         /// Requires Root permission
         /// </summary>
         /// <returns>SpamWatchToken</returns>
-        public List<SpamWatchToken> GetTokens()
+        public async Task<List<SpamWatchToken>> GetTokensAsync()
         {
-            var response = MakeRequest("tokens", Method.GET);
+            var response = await MakeRequestAsync("tokens", Method.GET);
             return JsonConvert.DeserializeObject<List<SpamWatchToken>>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
@@ -54,7 +44,7 @@ namespace SpamWatch
         /// <param name="userId">The Telegram User ID of the token owner</param>
         /// <param name="permission">The permission level the Token should have</param>
         /// <returns>The created Token</returns>
-        public SpamWatchToken CreateToken(int userId, Permissions permission)
+        public async Task<SpamWatchToken> CreateTokenAsync(int userId, Permissions permission)
         {
             
             object body;
@@ -67,7 +57,7 @@ namespace SpamWatch
             else
                 body = null;
 
-            var response = MakeRequest("tokens", Method.POST, body);
+            var response = await MakeRequestAsync("tokens", Method.POST, body);
 
             return JsonConvert.DeserializeObject<SpamWatchToken>(
                 response[0] as string ?? throw new Error("Something went wrong"));
@@ -77,9 +67,9 @@ namespace SpamWatch
         /// Gets the Token that the request was made with.
         /// </summary>
         /// <returns>Current Token</returns>
-        public SpamWatchToken GetSelf()
+        public async Task<SpamWatchToken> GetSelfAsync()
         {
-            var response = MakeRequest("tokens/self", Method.GET);
+            var response = await MakeRequestAsync("tokens/self", Method.GET);
             return JsonConvert.DeserializeObject<SpamWatchToken>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
@@ -90,9 +80,9 @@ namespace SpamWatch
         /// </summary>
         /// <param name="tokenId">The Token ID</param>
         /// <returns>The Token</returns>
-        public SpamWatchToken GetToken(int tokenId)
+        public async Task<SpamWatchToken> GetTokenAsync(int tokenId)
         {
-            var response = MakeRequest($"tokens/{tokenId}", Method.GET);
+            var response = await MakeRequestAsync($"tokens/{tokenId}", Method.GET);
             return JsonConvert.DeserializeObject<SpamWatchToken>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
@@ -101,9 +91,9 @@ namespace SpamWatch
         /// Delete a token using its ID
         /// </summary>
         /// <param name="tokenId">The ID of the Token</param>
-        public void DeleteToken(int tokenId)
+        public async Task DeleteTokenAsync(int tokenId)
         {
-            MakeRequest($"tokens/{tokenId}", Method.DELETE);
+            await MakeRequestAsync($"tokens/{tokenId}", Method.DELETE);
         }
 
         /// <summary>
@@ -111,9 +101,9 @@ namespace SpamWatch
         /// Requires Admin Permission
         /// </summary>
         /// <returns>A list of Bans</returns>
-        public List<SpamWatchBan> GetBans()
+        public async Task<List<SpamWatchBan>> GetBansAsync()
         {
-            var response = MakeRequest("banlist", Method.GET);
+            var response = await MakeRequestAsync("banlist", Method.GET);
             return JsonConvert.DeserializeObject<List<SpamWatchBan>>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
@@ -122,9 +112,9 @@ namespace SpamWatch
         /// Get a list of all banned user IDs
         /// </summary>
         /// <returns></returns>
-        public List<long> GetBansMin()
+        public async Task<List<long>> GetBansMinAsync()
         {
-            var response = MakeRequest("banlist/all", Method.GET);
+            var response = await MakeRequestAsync("banlist/all", Method.GET);
             var content = response[0] as string;
             return content.Split(Environment.NewLine.ToCharArray()).Select(long.Parse).ToList();
         }
@@ -135,7 +125,7 @@ namespace SpamWatch
         /// <param name="userId">ID of the banned user</param>
         /// <param name="reason">Reason why the user was banned</param>
         /// <param name="message">The message that lead to the current ban. (Optional)</param>
-        public void AddBan(int userId, string reason, string message = null)
+        public async Task AddBanAsync(int userId, string reason, string message = null)
         {
             var body = new List<object>();
 
@@ -152,7 +142,7 @@ namespace SpamWatch
                     message
                 });
 
-            MakeRequest("banlist", Method.POST, body);
+            await MakeRequestAsync("banlist", Method.POST, body);
         }
 
         /// <summary>
@@ -160,9 +150,9 @@ namespace SpamWatch
         /// </summary>
         /// <param name="userId">ID of the user</param>
         /// <returns>SpamWatchBan object or None</returns>
-        public SpamWatchBan GetBan(int userId)
+        public async Task<SpamWatchBan> GetBanAsync(int userId)
         {
-            var response = MakeRequest($"banlist/{userId}", Method.GET);
+            var response = await MakeRequestAsync($"banlist/{userId}", Method.GET);
             return JsonConvert.DeserializeObject<SpamWatchBan>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
@@ -171,38 +161,33 @@ namespace SpamWatch
         /// Remove a ban
         /// </summary>
         /// <param name="userId">ID of the user</param>
-        public void DeleteBan(int userId)
+        public async Task DeleteBanAsync(int userId)
         {
-            MakeRequest($"banlist/{userId}", Method.DELETE);
+            await MakeRequestAsync($"banlist/{userId}", Method.DELETE);
         }
 
         /// <summary>
         /// Get ban stats
         /// </summary>
         /// <returns></returns>
-        public SpamWatchStats Stats()
+        public async Task<SpamWatchStats> StatsAsync()
         {
-            var response = MakeRequest("stats", Method.GET);
+            var response = await MakeRequestAsync("stats", Method.GET);
             return JsonConvert.DeserializeObject<SpamWatchStats>(
                 response[0] as string ?? throw new Error("Something went wrong"));
         }
 
-        #region MakeRequest
-
-        private object[] MakeRequest(string path, Method method, object body = null)
+        private async Task<object[]> MakeRequestAsync(string path, Method method, object body = null)
         {
             var request = new RestRequest(path, method);
-
             if (body != null)
             {
                 request.RequestFormat = DataFormat.Json;
                 request.AddJsonBody(body);
             }
 
-            foreach (var requestParameter in request.Parameters) Console.WriteLine(requestParameter.Name);
-
-            var response = _client.Execute(request);
-
+            var response = await _client.ExecuteAsync(request);
+            
             if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created)
             {
                 return new object[] {response.Content, response};
@@ -236,7 +221,5 @@ namespace SpamWatch
                 return new object[] {string.Empty, response};
             }
         }
-
-        #endregion
     }
 }

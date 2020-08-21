@@ -44,6 +44,14 @@ namespace SpamWatchExample
             Console.WriteLine(ban.Reason);
             Console.WriteLine(ban.Date);
             Console.WriteLine(ban.Admin);
+
+            // You can also use async methods
+
+            var asyncBan = await client.GetBanAsync(638997860);
+            Console.WriteLine(ban.Id);
+            Console.WriteLine(ban.Reason);
+            Console.WriteLine(ban.Date);
+            Console.WriteLine(ban.Admin);
         }
     }
 }
