@@ -1,10 +1,12 @@
 # SpamWatch API C# Client
-![Nuget](https://img.shields.io/nuget/v/SpamWatch?style=for-the-badge)
 
 #### Install from Nuget
 
+![Nuget](https://img.shields.io/nuget/v/SpamWatch?style=for-the-badge)
+![Nuget](https://img.shields.io/nuget/dt/SpamWatch?style=for-the-badge)
+
 ```
-$ dotnet add package SpamWatch --version 1.0.0
+$ dotnet add package SpamWatch --version 1.1.0
 ```
 
 #### Build from source
