@@ -2,27 +2,8 @@ using System;
 using Newtonsoft.Json;
 using SpamWatch.Enums;
 
-namespace SpamWatch.Models
+namespace SpamWatch.Types.Utils
 {
-    public class SpamWatchToken
-    {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int Id { get; set; }
-
-        [JsonProperty("permission", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(PermissionConverter))]
-        public Permissions Permission { get; set; }
-
-        [JsonProperty("retired", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? Retired { get; set; }
-
-        [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
-        public string Token { get; set; }
-
-        [JsonProperty("userid", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Userid { get; set; }
-    }
-
     public class PermissionConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)

@@ -12,6 +12,7 @@
         <PackageProjectUrl>https://github.com/SpamWatch/spamwatch-csharp</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/SpamWatch/spamwatch-csharp/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/SpamWatch/spamwatch-csharp</RepositoryUrl>
+        <PackageVersion>1.1.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

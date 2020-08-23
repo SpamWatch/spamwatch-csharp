@@ -30,11 +30,18 @@ namespace SpamWatch
         }
     }
 
-    public class TooManyRequests : Exception
+    public class BadRequestException : Exception
+    {
+        public BadRequestException(string message) : base(message)
+        {
+        }
+    }
+
+    public class TooManyRequestsException : Exception
     {
         public DateTime UntilDate;
 
-        public TooManyRequests(string method, DateTime until) : base(
+        public TooManyRequestsException(string method, DateTime until) : base(
             $"Too Many Requests for method {method}. Try again in {(int) (until - DateTime.Now.ToLocalTime()).TotalSeconds}")
         {
             UntilDate = until;
