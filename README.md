@@ -6,7 +6,7 @@
 ![Nuget](https://img.shields.io/nuget/dt/SpamWatch?style=for-the-badge)
 
 ```
-$ dotnet add package SpamWatch --version 1.1.1
+$ dotnet add package SpamWatch --version 1.1.2
 ```
 
 #### Build from source
