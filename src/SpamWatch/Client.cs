@@ -92,7 +92,7 @@ namespace SpamWatch
         /// </summary>
         /// <param name="userId">ID of the user</param>
         /// <returns>SpamWatchBan object or None</returns>
-        public Ban GetBan(int userId)
+        public Ban GetBan(long userId)
         {
             return MakeRequests<Ban>($"banlist/{userId}", Method.GET);
         }
@@ -136,7 +136,7 @@ namespace SpamWatch
         /// Requires Admin Permission
         /// </summary>
         /// <param name="userId">ID of the user</param>
-        public void DeleteBan(int userId)
+        public void DeleteBan(long userId)
         {
             MakeRequests($"banlist/{userId}", Method.DELETE);
         }

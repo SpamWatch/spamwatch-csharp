@@ -84,7 +84,7 @@ namespace SpamWatch
         /// </summary>
         /// <param name="userId">ID of the user</param>
         /// <returns>SpamWatchBan object or None</returns>
-        public async Task<Ban> GetBanAsync(int userId)
+        public async Task<Ban> GetBanAsync(long userId)
         {
             return await MakeRequestsAsync<Ban>($"banlist/{userId}", Method.GET);
         }
@@ -124,7 +124,7 @@ namespace SpamWatch
         /// Requires Admin Permission
         /// </summary>
         /// <param name="userId">ID of the user</param>
-        public async Task DeleteBanAsync(int userId)
+        public async Task DeleteBanAsync(long userId)
         {
             await MakeRequestsAsync($"banlist/{userId}", Method.DELETE);
         }
